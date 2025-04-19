@@ -1,50 +1,51 @@
-"use client";
-import { useState } from "react";
-import axios from "axios";
-import { motion } from "framer-motion";
+"use client"
+import { useState } from "react"
+import axios from "axios"
+import { motion } from "framer-motion"
 
 interface Comment {
-  username: string;
-  score: number;
-  comment: string;
+  username: string
+  score: number
+  comment: string
 }
 
 export default function Home() {
-  const [url, setUrl] = useState("");
-  const [postTitle, setPostTitle] = useState("");
-  const [comments, setComments] = useState<Comment[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [url, setUrl] = useState("")
+  const [postTitle, setPostTitle] = useState("")
+  const [comments, setComments] = useState<Comment[]>([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
 
   const fetchComments = async () => {
-    setLoading(true);
-    setError("");
-    setComments([]);
-    setPostTitle("");
+    setLoading(true)
+    setError("")
+    setComments([])
+    setPostTitle("")
 
     try {
-      const postIdMatch = url.match(/comments\/([a-z0-9]+)/);
+      const postIdMatch = url.match(/comments\/([a-z0-9]+)/)
       if (!postIdMatch) {
-        setError("❌ Invalid Reddit URL!");
-        setLoading(false);
-        return;
+        setError("❌ Invalid Reddit URL!")
+        setLoading(false)
+        return
       }
 
-      const postId = postIdMatch[1];
+      const postId = postIdMatch[1]
 
       const response = await axios.get(
-        `http://localhost:8080/reddit/comments?post_id=${postId}`,
-      );
+        `http://localhost:8080/reddit/comments?post_id=${postId}`
+      )
 
-      if (response.data) {
-        setPostTitle(response.data.title);
-        setComments(response.data.top_comments);
+      if (response?.data) {
+        setPostTitle(response?.data?.title)
+        setComments(response?.data?.top_comments)
       }
     } catch (err) {
-      setError("❌ Failed to fetch comments. Check API.");
+      console.error(err)
+      setError("❌ Failed to fetch comments. Check API.")
     }
-    setLoading(false);
-  };
+    setLoading(false)
+  }
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-700 p-6 text-black">
@@ -143,5 +144,5 @@ export default function Home() {
         </div>
       </motion.div>
     </div>
-  );
+  )
 }

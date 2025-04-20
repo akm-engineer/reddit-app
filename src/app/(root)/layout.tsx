@@ -10,10 +10,10 @@ export default function Layout({ children }: PropsWithChildren) {
       <SidebarProvider>
         <div className="max-w-dvw mx-auto p-4 sm:pl-12 sm:pr-2 sm:py-6 flex w-full grow gap-5">
           <AppSidebar />
-          <div className="w-full space-y-4 mx-0 sm:mx-4 lg:mx-8">
+          <main className="w-full space-y-4 mx-0 sm:mx-4 lg:mx-8">
             <Navbar />
-            <div className="mx-0 sm:mx-2">{children}</div>
-          </div>
+            {children}
+          </main>
         </div>
       </SidebarProvider>
       <BottomBar className="sticky bottom-0 flex w-full justify-center gap-8 border-t p-3 sm:hidden" />

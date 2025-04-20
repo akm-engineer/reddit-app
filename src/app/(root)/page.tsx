@@ -59,8 +59,8 @@ export default function Home() {
   }
   return (
     <section className="w-full min-w-0 flex flex-col gap-5">
-      <Tabs defaultValue="ai-lyrical" className="bg-transparent">
-        <TabsList className="bg-transparent flex gap-8 p-0 my-8">
+      <Tabs defaultValue="ai-lyrical" className="bg-transparent w-full h-full">
+        <TabsList className="bg-transparent flex justify-start w-full overflow-x-auto overflow-y-hidden sm:w-fit gap-4 sm:gap-5 lg:gap-8 p-0 my-4 sm:my-5 lg:my-8 rounded-none">
           <TabsTrigger
             value="ai-lyrical"
             className="dark:data-[state=active]:bg-[#1C1C1C] bg-[#1C1C1C] data-[state=active]:text-[#808080] text-[#808080] dark:data-[state=active]:border-2 dark:data-[state=active]:border-[#969494]  flex items-center gap-3 px-3 py-9"
@@ -93,8 +93,8 @@ export default function Home() {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="ai-lyrical">
-          <section className="w-full h-[40dvh] flex justify-center items-center p-5 my-8">
-            <div className="w-[50%] h-full border rounded-2xl text-[#808080] bg-[#313131] p-1">
+          <section className="w-full h-[30dvh] lg:h-[40dvh] flex justify-center items-center p-1 sm:p-3 lg:p-5 my-8 sm:my-4 lg:my-8">
+            <div className="w-full sm:w-[80%] lg:w-[50%] h-full border rounded-2xl text-[#808080] bg-[#313131] p-1">
               <div className="flex flex-col justify-start items-start w-full h-full">
                 <div className="bg-[#1C1C1C] w-fit h-fit flex items-center justify-center gap-2 rounded-b-none rounded-xl text-sm p-3">
                   <HugeiconsIcon
@@ -106,31 +106,35 @@ export default function Home() {
                   />
                   AI Lyrical Video
                 </div>
-                <Textarea
-                  className="bg-[#1C1C1C] focus-visible:ring-0 w-full h-full rounded-xl rounded-tl-none resize-none"
-                  placeholder="Enter your Reddit URL here"
-                  value={value}
-                  maxLength={maxLength}
-                  onChange={handleChange}
-                  aria-describedby={`input-description`}
-                />
-                <Button className="flex gap-2 items-center bg-transparent">
-                  <HugeiconsIcon
-                    icon={SparklesIcon}
-                    size={20}
-                    stroke="#1E81F3"
-                    fill="#1E81F3"
-                    className="border-[#1E81F3]"
+                <div className="w-full h-full flex flex-col bg-[#1C1C1C] rounded-xl rounded-tl-none">
+                  <Textarea
+                    className="bg-transparent focus-visible:ring-0 border-none w-full h-full resize-none outline-none"
+                    placeholder="Enter your Reddit URL here"
+                    value={value}
+                    maxLength={maxLength}
+                    onChange={handleChange}
+                    aria-describedby={`input-description`}
                   />
-                  Generate Now
-                </Button>
-                <div
-                  id={`input-description`}
-                  className="pointer-events-none  flex items-center justify-center pe-3 text-xs tabular-nums text-white peer-disabled:opacity-50"
-                  aria-live="polite"
-                  role="status"
-                >
-                  {characterCount}/{limit}
+                  <div className="w-full h-fit flex items-end justify-between p-2">
+                    <div
+                      id={`input-description`}
+                      className="pointer-events-none  flex items-center justify-center pe-3 text-xs tabular-nums text-white peer-disabled:opacity-50 p-2"
+                      aria-live="polite"
+                      role="status"
+                    >
+                      {characterCount}/{limit}
+                    </div>
+                    <Button className="flex gap-2 items-center bg-transparent text-[#808080] hover:bg-transparent ring-1 ring-sidebar-ring">
+                      <HugeiconsIcon
+                        icon={SparklesIcon}
+                        size={20}
+                        stroke="#1E81F3"
+                        fill="#1E81F3"
+                        className="border-[#1E81F3]"
+                      />
+                      Generate Now
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>

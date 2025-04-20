@@ -25,7 +25,7 @@ export const UserAvatar = ({
           )}
         />
       ) : (
-        <Avatar name={name} className={className} />
+        <Avatar name={name} className={className} size={size} />
       )}
     </>
   )
@@ -43,7 +43,7 @@ const Avatar = ({ name, className = "", size = 40, ...props }: AvatarProps) => {
   return (
     <div
       className={cn(
-        "flex items-center justify-center rounded-full font-medium flex-shrink-0",
+        "flex items-center justify-center rounded-full font-semibold flex-shrink-0",
         className
       )}
       style={{
@@ -51,7 +51,7 @@ const Avatar = ({ name, className = "", size = 40, ...props }: AvatarProps) => {
         height: size,
         backgroundColor,
         color: textColor,
-        fontSize: size * 0.4,
+        fontSize: size * 0.5,
       }}
       {...props}
     >

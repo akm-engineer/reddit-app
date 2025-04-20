@@ -27,20 +27,30 @@ export const UserButton = ({ className }: { className?: string }) => {
   const { theme, setTheme } = useTheme()
   const user = {
     avatarUrl: "",
-    username: "",
+    name: "Lalitya Sahu",
   }
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className={cn("flex-none rounded-full", className)}>
-          <UserAvatar avatarUrl={user?.avatarUrl} name="Lalitya Sahu" />
+        <button className={cn("flex-none rounded-lg", className)}>
+          <div className="w-min p-2.5 bg-[#272727] rounded-lg flex gap-2 items-center">
+            <UserAvatar
+              avatarUrl={user?.avatarUrl}
+              name={user?.name}
+              size={34}
+            />
+
+            <span className="hidden md:block whitespace-nowrap text-[#808080] text-sm font-semibold">
+              {user?.name}
+            </span>
+          </div>
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>Logged in as @{user.username}</DropdownMenuLabel>
+        <DropdownMenuLabel>Logged in as @{user?.name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <Link href={`/user/${user.username}`}>
+        <Link href={`/user/${user?.name}`}>
           <DropdownMenuItem>
             <UserIcon className="mr-2 size-4" />
             Profile

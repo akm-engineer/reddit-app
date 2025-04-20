@@ -36,7 +36,7 @@ export function AppSidebar() {
   ]
 
   return (
-    <Sidebar className="border border-[#333] my-8 ml-8 h-[90vh] rounded-xl ">
+    <Sidebar className="border bg-[#1C1C1C] border-[#333] my-8 ml-8 h-[90vh] rounded-xl ">
       <SidebarHeader className="p-4 pb-2 flex justify-center items-center">
         <Link href="/" className="flex items-end gap-2">
           <div className="flex items-center justify-center w-8 h-8 rounded-md bg-white text-black font-bold">

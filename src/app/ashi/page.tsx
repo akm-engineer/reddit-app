@@ -9,7 +9,7 @@ interface Comment {
   comment: string
 }
 
-export default function Home() {
+export default function Page() {
   const [url, setUrl] = useState("")
   const [postTitle, setPostTitle] = useState("")
   const [comments, setComments] = useState<Comment[]>([])

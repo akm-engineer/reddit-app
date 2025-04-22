@@ -16,7 +16,7 @@ export default function Layout({ children }: PropsWithChildren) {
           </main>
         </div>
       </SidebarProvider>
-      <BottomBar className="sticky bottom-0 flex w-full justify-center gap-8 border-t p-3 sm:hidden" />
+      <BottomBar />
     </div>
   )
 }

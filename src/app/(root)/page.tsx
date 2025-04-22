@@ -60,31 +60,37 @@ export default function Home() {
   return (
     <section className="w-full min-w-0 flex flex-col gap-5">
       <Tabs defaultValue="ai-lyrical" className="bg-transparent w-full h-full">
-        <TabsList className="bg-transparent flex justify-start w-full overflow-x-auto overflow-y-hidden sm:w-fit gap-4 sm:gap-5 lg:gap-8 p-0 my-4 sm:my-5 lg:my-8 rounded-none">
+        <TabsList className="bg-transparent flex justify-start items-center h-[16vh] sm:h-[20vh] lg:h-[40vh] w-full overflow-x-auto overflow-y-hidden  sm:w-fit gap-4 sm:gap-5 lg:gap-8 p-0  rounded-none">
           <TabsTrigger
             value="ai-lyrical"
-            className="dark:data-[state=active]:bg-[#1C1C1C] bg-[#1C1C1C] data-[state=active]:text-[#808080] text-[#808080] dark:data-[state=active]:border-2 dark:data-[state=active]:border-[#969494]  flex items-center gap-3 px-3 py-9"
+            className="dark:data-[state=active]:bg-[#1C1C1C] bg-[#1C1C1C] data-[state=active]:text-[#808080] text-[#808080] dark:data-[state=active]:border-2 dark:data-[state=active]:border-[#969494] flex items-center gap-3 w-fit h-fit p-3"
           >
-            <div className="bg-[#343333] p-3.5 rounded-full flex justify-center items-center">
-              <HugeiconsIcon icon={VideoCameraAiIcon} className="size-6" />
+            <div className="bg-[#343333] p-3 sm:p-3.5 rounded-full flex justify-center items-center">
+              <HugeiconsIcon
+                icon={VideoCameraAiIcon}
+                className="size-5 sm:size-6"
+              />
             </div>
             AI Lyrical Video
           </TabsTrigger>
           <TabsTrigger
             value="insta"
-            className="dark:data-[state=active]:bg-[#1C1C1C] bg-[#1C1C1C] data-[state=active]:text-[#808080] text-[#808080] dark:data-[state=active]:border-2 dark:data-[state=active]:border-[#969494]  flex items-center gap-3 px-3 py-9"
+            className="dark:data-[state=active]:bg-[#1C1C1C] bg-[#1C1C1C] data-[state=active]:text-[#808080] text-[#808080] dark:data-[state=active]:border-2 dark:data-[state=active]:border-[#969494] flex items-center gap-3 w-fit h-fit p-3"
           >
-            <div className="bg-[#343333] p-3.5 rounded-full flex justify-center items-center">
-              <HugeiconsIcon icon={InstagramIcon} className="size-6" />
+            <div className="bg-[#343333] p-3 sm:p-3.5 rounded-full flex justify-center items-center">
+              <HugeiconsIcon
+                icon={InstagramIcon}
+                className="size-5 sm:size-6"
+              />
             </div>
             Insta Videos
           </TabsTrigger>
           <TabsTrigger
             value="popcast"
-            className="dark:data-[state=active]:bg-[#1C1C1C] bg-[#1C1C1C] data-[state=active]:text-[#808080] text-[#808080] dark:data-[state=active]:border-2 dark:data-[state=active]:border-[#969494]  flex items-center gap-3 px-3 py-9"
+            className="dark:data-[state=active]:bg-[#1C1C1C] bg-[#1C1C1C] data-[state=active]:text-[#808080] text-[#808080] dark:data-[state=active]:border-2 dark:data-[state=active]:border-[#969494] flex items-center gap-3 w-fit h-fit p-3"
           >
-            <div className="bg-[#343333] p-3.5 rounded-full flex justify-center items-center">
-              <HugeiconsIcon icon={AiMicIcon} className="size-6" />
+            <div className="bg-[#343333] p-3 sm:p-3.5 rounded-full flex justify-center items-center">
+              <HugeiconsIcon icon={AiMicIcon} className="size-5 sm:size-6" />
             </div>
             <div className="flex flex-col items-start justify-start gap-1">
               <span> Popcast Miniclips</span>
@@ -93,7 +99,7 @@ export default function Home() {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="ai-lyrical">
-          <section className="w-full h-[30dvh] lg:h-[40dvh] flex justify-center items-center p-1 sm:p-3 lg:p-5 my-8 sm:my-4 lg:my-8">
+          <section className="w-full h-[40dvh] lg:h-[40dvh] flex justify-center items-center p-1 sm:p-3 lg:p-5 my-8 sm:my-4 lg:my-8">
             <div className="w-full sm:w-[80%] lg:w-[50%] h-full border rounded-2xl text-[#808080] bg-[#313131] p-1">
               <div className="flex flex-col justify-start items-start w-full h-full">
                 <div className="bg-[#1C1C1C] w-fit h-fit flex items-center justify-center gap-2 rounded-b-none rounded-xl text-sm p-3">
@@ -142,7 +148,7 @@ export default function Home() {
         </TabsContent>
         <TabsContent value="insta">
           <section className="w-full h-[40dvh] flex justify-center items-center p-5 my-8">
-            <div className="w-[50%] h-full border rounded-2xl text-[#808080] bg-[#313131] p-1">
+            <div className="w-full sm:w-[50%] h-full border rounded-2xl text-[#808080] bg-[#313131] p-1">
               <div className="flex flex-col justify-start items-start w-full h-full">
                 <PromptInput
                   value={input}

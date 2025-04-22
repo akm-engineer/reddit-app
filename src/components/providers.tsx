@@ -10,7 +10,11 @@ export const Providers = ({ children }: React.PropsWithChildren) => {
   const [client] = React.useState(new QueryClient())
   return (
     <QueryClientProvider client={client}>
-      <NextThemesProvider attribute="class" defaultTheme="dark">
+      <NextThemesProvider
+        attribute="class"
+        defaultTheme="dark"
+        enableSystem={false}
+      >
         {children}
         <ReactQueryDevtools initialIsOpen={false} />
 

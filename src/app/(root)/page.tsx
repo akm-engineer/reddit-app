@@ -258,7 +258,7 @@ export default function Home() {
           {[1, 2, 3, 4].map((_, i) => (
             <div
               key={i}
-              className="bg-[url(/media/video-cover.png)] flex-none rounded-lg w-56 h-36 relative ring-4 ring-black"
+              className="bg-[url(/media/video-cover.png)] aspect-video flex-none rounded-lg w-56 h-36 relative ring-4 ring-black"
             >
               <div className="flex flex-col absolute bottom-2 left-2">
                 <p className="text-white font-semibold text-sm">

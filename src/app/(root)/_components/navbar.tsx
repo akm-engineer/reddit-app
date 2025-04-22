@@ -8,7 +8,7 @@ export const Navbar = () => {
   }
   return (
     <>
-      <header className="sticky top-0 z-10 shadow-sm">
+      <header className="z-10 shadow-sm">
         <div className="w-full mx-auto flex flex-row-reverse sm:flex-row justify-end sm:justify-center items-center flex-wrap gap-2 sm:gap-5 py-3">
           <div className="flex flex-col items-start">
             <h1 className="text-lg sm:text-xl lg:text-2xl text-white font-semibold">

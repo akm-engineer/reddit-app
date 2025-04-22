@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { useCharacterLimit } from "@/hooks/use-character-limit"
 import {
   AiMicIcon,
+  Clock04Icon,
   InstagramIcon,
   SparklesIcon,
   VideoCameraAiIcon,
@@ -58,9 +59,9 @@ export default function Home() {
     }
   }
   return (
-    <section className="w-full min-w-0 flex flex-col gap-5">
+    <section className="w-full h-full min-h-0 min-w-0 flex flex-col gap-5">
       <Tabs defaultValue="ai-lyrical" className="bg-transparent w-full h-full">
-        <TabsList className="bg-transparent flex justify-start items-center h-[16vh] sm:h-[20vh] lg:h-[40vh] w-full overflow-x-auto overflow-y-hidden  sm:w-fit gap-4 sm:gap-5 lg:gap-8 p-0  rounded-none">
+        <TabsList className="bg-transparent flex justify-start items-center h-[16vh] sm:h-[14vh] w-full overflow-x-auto overflow-y-hidden sm:w-fit gap-4 sm:gap-5 lg:gap-8 p-0 rounded-none">
           <TabsTrigger
             value="ai-lyrical"
             className="dark:data-[state=active]:bg-[#1C1C1C] bg-[#1C1C1C] data-[state=active]:text-[#808080] text-[#808080] dark:data-[state=active]:border-2 dark:data-[state=active]:border-[#969494] flex items-center gap-3 w-fit h-fit p-3"
@@ -99,7 +100,7 @@ export default function Home() {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="ai-lyrical">
-          <section className="w-full h-[40dvh] lg:h-[40dvh] flex justify-center items-center p-1 sm:p-3 lg:p-5 my-8 sm:my-4 lg:my-8">
+          <section className="w-full h-[40dvh] flex justify-center items-center p-1 sm:p-3 lg:p-5 my-8 sm:my-0">
             <div className="w-full sm:w-[80%] lg:w-[50%] h-full border rounded-2xl text-[#808080] bg-[#313131] p-1">
               <div className="flex flex-col justify-start items-start w-full h-full">
                 <div className="bg-[#1C1C1C] w-fit h-fit flex items-center justify-center gap-2 rounded-b-none rounded-xl text-sm p-3">
@@ -246,6 +247,29 @@ export default function Home() {
           </section>
         </TabsContent>
       </Tabs>
+
+      <div className="w-full rounded-xl p-3 bg-[#1C1C1C] flex flex-col justify-between items-start gap-y-2">
+        <div className=" text-[#A7A7A7] flex gap-1.5 items-center text-sm">
+          <HugeiconsIcon icon={Clock04Icon} size={20} />
+          <span>Recent videos</span>
+        </div>
+
+        <div className="w-full h-40 flex items-center justify-start pl-2 gap-6 overflow-x-auto overflow-y-hidden">
+          {[1, 2, 3, 4].map((_, i) => (
+            <div
+              key={i}
+              className="bg-[url(/media/video-cover.png)] flex-none rounded-lg w-56 h-36 relative ring-4 ring-black"
+            >
+              <div className="flex flex-col absolute bottom-2 left-2">
+                <p className="text-white font-semibold text-sm">
+                  The best Podcast ever!!
+                </p>
+                <p className="text-[#B1B1B1] text-xs">2 Days Ago</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   )
 }

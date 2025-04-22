@@ -1,3 +1,251 @@
+"use client"
+import { Button } from "@/components/ui/button"
+import {
+  PromptInput,
+  PromptInputAction,
+  PromptInputActions,
+  PromptInputTextarea,
+} from "@/components/ui/prompt-input"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Textarea } from "@/components/ui/textarea"
+import { useCharacterLimit } from "@/hooks/use-character-limit"
+import {
+  AiMicIcon,
+  InstagramIcon,
+  SparklesIcon,
+  VideoCameraAiIcon,
+} from "@hugeicons/core-free-icons"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { ArrowUp, Paperclip, Square, X } from "lucide-react"
+import { useRef, useState } from "react"
+
 export default function Home() {
-  return <div className="">Home</div>
+  const maxLength = 50
+  const {
+    value,
+    characterCount,
+    handleChange,
+    maxLength: limit,
+  } = useCharacterLimit({ maxLength })
+
+  const [input, setInput] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [files, setFiles] = useState<File[]>([])
+  const uploadInputRef = useRef<HTMLInputElement>(null)
+
+  const handleSubmit = () => {
+    if (input.trim() || files.length > 0) {
+      setIsLoading(true)
+      setTimeout(() => {
+        setIsLoading(false)
+        setInput("")
+        setFiles([])
+      }, 2000)
+    }
+  }
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const newFiles = Array.from(event.target.files)
+      setFiles((prev) => [...prev, ...newFiles])
+    }
+  }
+
+  const handleRemoveFile = (index: number) => {
+    setFiles((prev) => prev.filter((_, i) => i !== index))
+    if (uploadInputRef?.current) {
+      uploadInputRef.current.value = ""
+    }
+  }
+  return (
+    <section className="w-full min-w-0 flex flex-col gap-5">
+      <Tabs defaultValue="ai-lyrical" className="bg-transparent w-full h-full">
+        <TabsList className="bg-transparent flex justify-start items-center h-[16vh] sm:h-[20vh] lg:h-[40vh] w-full overflow-x-auto overflow-y-hidden  sm:w-fit gap-4 sm:gap-5 lg:gap-8 p-0  rounded-none">
+          <TabsTrigger
+            value="ai-lyrical"
+            className="dark:data-[state=active]:bg-[#1C1C1C] bg-[#1C1C1C] data-[state=active]:text-[#808080] text-[#808080] dark:data-[state=active]:border-2 dark:data-[state=active]:border-[#969494] flex items-center gap-3 w-fit h-fit p-3"
+          >
+            <div className="bg-[#343333] p-3 sm:p-3.5 rounded-full flex justify-center items-center">
+              <HugeiconsIcon
+                icon={VideoCameraAiIcon}
+                className="size-5 sm:size-6"
+              />
+            </div>
+            AI Lyrical Video
+          </TabsTrigger>
+          <TabsTrigger
+            value="insta"
+            className="dark:data-[state=active]:bg-[#1C1C1C] bg-[#1C1C1C] data-[state=active]:text-[#808080] text-[#808080] dark:data-[state=active]:border-2 dark:data-[state=active]:border-[#969494] flex items-center gap-3 w-fit h-fit p-3"
+          >
+            <div className="bg-[#343333] p-3 sm:p-3.5 rounded-full flex justify-center items-center">
+              <HugeiconsIcon
+                icon={InstagramIcon}
+                className="size-5 sm:size-6"
+              />
+            </div>
+            Insta Videos
+          </TabsTrigger>
+          <TabsTrigger
+            value="popcast"
+            className="dark:data-[state=active]:bg-[#1C1C1C] bg-[#1C1C1C] data-[state=active]:text-[#808080] text-[#808080] dark:data-[state=active]:border-2 dark:data-[state=active]:border-[#969494] flex items-center gap-3 w-fit h-fit p-3"
+          >
+            <div className="bg-[#343333] p-3 sm:p-3.5 rounded-full flex justify-center items-center">
+              <HugeiconsIcon icon={AiMicIcon} className="size-5 sm:size-6" />
+            </div>
+            <div className="flex flex-col items-start justify-start gap-1">
+              <span> Popcast Miniclips</span>
+              <span className="text-xs text-white">(Coming Soon)</span>
+            </div>
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="ai-lyrical">
+          <section className="w-full h-[40dvh] lg:h-[40dvh] flex justify-center items-center p-1 sm:p-3 lg:p-5 my-8 sm:my-4 lg:my-8">
+            <div className="w-full sm:w-[80%] lg:w-[50%] h-full border rounded-2xl text-[#808080] bg-[#313131] p-1">
+              <div className="flex flex-col justify-start items-start w-full h-full">
+                <div className="bg-[#1C1C1C] w-fit h-fit flex items-center justify-center gap-2 rounded-b-none rounded-xl text-sm p-3">
+                  <HugeiconsIcon
+                    icon={SparklesIcon}
+                    size={20}
+                    stroke="#1E81F3"
+                    fill="#1E81F3"
+                    className="border-[#1E81F3]"
+                  />
+                  AI Lyrical Video
+                </div>
+                <div className="w-full h-full flex flex-col bg-[#1C1C1C] rounded-xl rounded-tl-none">
+                  <Textarea
+                    className="bg-transparent focus-visible:ring-0 border-none w-full h-full resize-none outline-none"
+                    placeholder="Enter your Reddit URL here"
+                    value={value}
+                    maxLength={maxLength}
+                    onChange={handleChange}
+                    aria-describedby={`input-description`}
+                  />
+                  <div className="w-full h-fit flex items-end justify-between p-2">
+                    <div
+                      id={`input-description`}
+                      className="pointer-events-none  flex items-center justify-center pe-3 text-xs tabular-nums text-white peer-disabled:opacity-50 p-2"
+                      aria-live="polite"
+                      role="status"
+                    >
+                      {characterCount}/{limit}
+                    </div>
+                    <Button className="flex gap-2 items-center bg-transparent text-[#808080] hover:bg-transparent ring-1 ring-sidebar-ring">
+                      <HugeiconsIcon
+                        icon={SparklesIcon}
+                        size={20}
+                        stroke="#1E81F3"
+                        fill="#1E81F3"
+                        className="border-[#1E81F3]"
+                      />
+                      Generate Now
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </TabsContent>
+        <TabsContent value="insta">
+          <section className="w-full h-[40dvh] flex justify-center items-center p-5 my-8">
+            <div className="w-full sm:w-[50%] h-full border rounded-2xl text-[#808080] bg-[#313131] p-1">
+              <div className="flex flex-col justify-start items-start w-full h-full">
+                <PromptInput
+                  value={input}
+                  onValueChange={setInput}
+                  isLoading={isLoading}
+                  onSubmit={handleSubmit}
+                  className="w-full h-full rounded-xl relative"
+                >
+                  {files.length > 0 && (
+                    <div className="flex flex-wrap gap-2 pb-2">
+                      {files.map((file, index) => (
+                        <div
+                          key={index}
+                          className="bg-secondary flex items-center gap-2 rounded-lg px-3 py-2 text-sm"
+                        >
+                          <Paperclip className="size-4" />
+                          <span className="max-w-[120px] truncate">
+                            {file.name}
+                          </span>
+                          <button
+                            onClick={() => handleRemoveFile(index)}
+                            className="hover:bg-secondary/50 rounded-full p-1"
+                          >
+                            <X className="size-4" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <PromptInputTextarea
+                    placeholder="Ask me anything..."
+                    className="w-full "
+                  />
+
+                  <PromptInputActions className="flex items-center justify-between gap-2 pt-2 ">
+                    {/* <PromptInputActions className="flex items-center justify-between gap-2 pt-2 w-full left-0 p-2 absolute bottom-0"> */}
+                    <div className="flex gap-2 items-center">
+                      <PromptInputAction tooltip="Attach files">
+                        <label
+                          htmlFor="file-upload"
+                          className="hover:bg-secondary-foreground/10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-2xl"
+                        >
+                          <input
+                            type="file"
+                            multiple
+                            onChange={handleFileChange}
+                            className="hidden"
+                            id="file-upload"
+                          />
+                          <Paperclip className="text-primary size-5" />
+                        </label>
+                      </PromptInputAction>
+                      <PromptInputAction tooltip="Attach files">
+                        <div
+                          id={`input-description`}
+                          className="pointer-events-none  flex items-center justify-center pe-3 text-xs tabular-nums text-white peer-disabled:opacity-50"
+                          aria-live="polite"
+                          role="status"
+                        >
+                          {characterCount}/{limit}
+                        </div>
+                      </PromptInputAction>
+                    </div>
+
+                    <PromptInputAction
+                      tooltip={isLoading ? "Stop generation" : "Send message"}
+                    >
+                      <Button
+                        variant="default"
+                        size="icon"
+                        className="h-8 w-8 rounded-full"
+                        onClick={handleSubmit}
+                      >
+                        {isLoading ? (
+                          <Square className="size-5 fill-current" />
+                        ) : (
+                          <ArrowUp className="size-5" />
+                        )}
+                      </Button>
+                    </PromptInputAction>
+                  </PromptInputActions>
+                </PromptInput>
+              </div>
+            </div>
+          </section>
+        </TabsContent>
+        <TabsContent value="popcast">
+          <section className="w-full h-[40dvh] flex justify-center items-center p-5 my-8">
+            <div className="w-[50%] h-full   p-1">
+              <div className="flex flex-col justify-center items-center font-mono w-full h-full text-6xl">
+                Coming Soon.
+              </div>
+            </div>
+          </section>
+        </TabsContent>
+      </Tabs>
+    </section>
+  )
 }

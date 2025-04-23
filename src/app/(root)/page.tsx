@@ -18,6 +18,7 @@ import {
 } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { ArrowUp, Paperclip, Square, X } from "lucide-react"
+import Link from "next/link"
 import { useRef, useState } from "react"
 
 export default function Home() {
@@ -100,7 +101,7 @@ export default function Home() {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="ai-lyrical">
-          <section className="w-full h-[40dvh] flex justify-center items-center p-1 sm:p-3 lg:p-5 my-8 sm:my-0">
+          <section className="w-full h-[40dvh] flex justify-center items-center p-1 sm:p-3 lg:p-5 mt-8 -mb-14 sm:mb-0 sm:my-0 sm:mt-0">
             <div className="w-full sm:w-[80%] lg:w-[50%] h-full border rounded-2xl text-[#808080] bg-[#313131] p-1">
               <div className="flex flex-col justify-start items-start w-full h-full">
                 <div className="bg-[#1C1C1C] w-fit h-fit flex items-center justify-center gap-2 rounded-b-none rounded-xl text-sm p-3">
@@ -131,15 +132,20 @@ export default function Home() {
                     >
                       {characterCount}/{limit}
                     </div>
-                    <Button className="flex gap-2 items-center bg-transparent text-[#808080] hover:bg-transparent ring-1 ring-sidebar-ring">
-                      <HugeiconsIcon
-                        icon={SparklesIcon}
-                        size={20}
-                        stroke="#1E81F3"
-                        fill="#1E81F3"
-                        className="border-[#1E81F3]"
-                      />
-                      Generate Now
+                    <Button
+                      className="flex gap-2 items-center bg-transparent text-[#808080] hover:bg-transparent ring-1 ring-sidebar-ring"
+                      asChild
+                    >
+                      <Link href="/edit">
+                        <HugeiconsIcon
+                          icon={SparklesIcon}
+                          size={20}
+                          stroke="#1E81F3"
+                          fill="#1E81F3"
+                          className="border-[#1E81F3]"
+                        />
+                        Generate Now
+                      </Link>
                     </Button>
                   </div>
                 </div>
@@ -248,7 +254,7 @@ export default function Home() {
         </TabsContent>
       </Tabs>
 
-      <div className="w-full rounded-xl p-3 bg-[#1C1C1C] flex flex-col justify-between items-start gap-y-2">
+      <div className="w-full rounded-xl p-3 bg-[#1C1C1C] flex flex-col justify-between items-start gap-y-2 mb-24 sm:mb-0">
         <div className=" text-[#A7A7A7] flex gap-1.5 items-center text-sm">
           <HugeiconsIcon icon={Clock04Icon} size={20} />
           <span>Recent videos</span>

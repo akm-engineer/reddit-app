@@ -101,7 +101,7 @@ export default function Home() {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="ai-lyrical">
-          <section className="w-full h-[40dvh] flex justify-center items-center p-1 sm:p-3 lg:p-5 mt-8 -mb-14 sm:mb-0 sm:my-0 sm:mt-0">
+          <section className="w-full h-[40dvh] flex justify-center items-center p-1 sm:p-3 lg:p-5 mt-8 -mb-14 sm:-mb-60 sm:my-0 sm:mt-0">
             <div className="w-full sm:w-[80%] lg:w-[50%] h-full border rounded-2xl text-[#808080] bg-[#313131] p-1">
               <div className="flex flex-col justify-start items-start w-full h-full">
                 <div className="bg-[#1C1C1C] w-fit h-fit flex items-center justify-center gap-2 rounded-b-none rounded-xl text-sm p-3">
@@ -192,7 +192,6 @@ export default function Home() {
                   />
 
                   <PromptInputActions className="flex items-center justify-between gap-2 pt-2 ">
-                    {/* <PromptInputActions className="flex items-center justify-between gap-2 pt-2 w-full left-0 p-2 absolute bottom-0"> */}
                     <div className="flex gap-2 items-center">
                       <PromptInputAction tooltip="Attach files">
                         <label
@@ -254,13 +253,13 @@ export default function Home() {
         </TabsContent>
       </Tabs>
 
-      <div className="w-full rounded-xl p-3 bg-[#1C1C1C] flex flex-col justify-between items-start gap-y-2 mb-24 sm:mb-0">
-        <div className=" text-[#A7A7A7] flex gap-1.5 items-center text-sm">
+      <div className="w-full rounded-xl p-3 bg-[#1C1C1C] flex flex-col justify-between items-start gap-y-2 mb-24 sm:mb-2">
+        <div className="text-[#A7A7A7] flex gap-1.5 items-center text-sm w-fit">
           <HugeiconsIcon icon={Clock04Icon} size={20} />
           <span>Recent videos</span>
         </div>
 
-        <div className="w-full h-40 flex items-center justify-start pl-2 gap-6 overflow-x-auto overflow-y-hidden">
+        <div className="w-full h-40 flex items-center justify-start px-2 gap-6 overflow-x-auto overflow-y-hidden">
           {[1, 2, 3, 4].map((_, i) => (
             <div
               key={i}

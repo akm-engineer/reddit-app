@@ -55,27 +55,36 @@ const DialogVariants = cva(
 
 interface DialogContentProps
   extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>,
-    VariantProps<typeof DialogVariants> {}
+    VariantProps<typeof DialogVariants> {
+  closeBtn?: boolean
+}
 
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   DialogContentProps
->(({ side = "bottom", className, children, ...props }, ref) => (
-  <DialogPortal>
-    <DialogOverlay />
-    <DialogPrimitive.Content
-      ref={ref}
-      className={cn(DialogVariants({ side }), "space-y-2.5", className)}
-      {...props}
-    >
-      {children}
-      <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
-        <X className="h-4 w-4" />
-        <span className="sr-only">Close</span>
-      </DialogClose>
-    </DialogPrimitive.Content>
-  </DialogPortal>
-))
+>(
+  (
+    { side = "bottom", closeBtn = false, className, children, ...props },
+    ref
+  ) => (
+    <DialogPortal>
+      <DialogOverlay />
+      <DialogPrimitive.Content
+        ref={ref}
+        className={cn(DialogVariants({ side }), "space-y-2.5", className)}
+        {...props}
+      >
+        {children}
+        {closeBtn && (
+          <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
+            <X className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </DialogClose>
+        )}
+      </DialogPrimitive.Content>
+    </DialogPortal>
+  )
+)
 DialogContent.displayName = DialogPrimitive.Content.displayName
 
 const DialogHeader = ({

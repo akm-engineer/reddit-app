@@ -18,6 +18,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
+import { PremiumDialog } from "./premium.dialog"
 
 export function AppSidebar() {
   const pathname = usePathname()
@@ -72,20 +73,22 @@ export function AppSidebar() {
       <SidebarFooter className="mt-auto">
         <SidebarMenu className="px-2 py-2">
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className="bg-[#1e1e1e] text-white ">
+            <SidebarMenuButton asChild className="bg-[#1e1e1e] text-white">
               <Link
-                href="/upgrade"
+                href="#"
                 className="flex items-center justify-center w-full h-16"
               >
-                <div className="flex items-center gap-3 h-full py-3 ">
-                  <div className="p-2.5 flex items-center justify-center bg-white text-black rounded-full ">
-                    <HugeiconsIcon icon={Crown02Icon} className="size-5" />
+                <PremiumDialog>
+                  <div className="flex items-center gap-3 h-full py-3 ">
+                    <div className="p-2.5 flex items-center justify-center bg-white text-black rounded-full ">
+                      <HugeiconsIcon icon={Crown02Icon} className="size-5" />
+                    </div>
+                    <div className="flex flex-col items-start text-white py-6">
+                      <span className="text-sm font-medium ">Upgrade Plan</span>
+                      <span className="text-xs ">Get premium features</span>
+                    </div>
                   </div>
-                  <div className="flex flex-col items-start text-white py-6">
-                    <span className="text-sm font-medium ">Upgrade Plan</span>
-                    <span className="text-xs ">Get premium features</span>
-                  </div>
-                </div>
+                </PremiumDialog>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

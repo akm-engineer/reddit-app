@@ -4,6 +4,7 @@ import { MobileBackButton } from "../video/page"
 import Link from "next/link"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { Crown02Icon } from "@hugeicons/core-free-icons"
+import { PremiumDialog } from "../../_components/premium.dialog"
 
 export default function Page() {
   return (
@@ -76,12 +77,14 @@ export default function Page() {
       </div>
 
       <div className="w-full flex gap-4 items-center mt-7">
-        <Button
-          className="bg-[#272727] text-[#808080] flex-1 hover:bg-[#272727] border-2 rounded border-[#3B3B3B]"
-          asChild
-        >
-          <Link href="/effects">Generate Now</Link>
-        </Button>
+        <PremiumDialog>
+          <Button
+            className="bg-[#272727] text-[#808080] flex-1 hover:bg-[#272727] border-2 rounded border-[#3B3B3B]"
+            asChild
+          >
+            <Link href="/effects">Generate Now</Link>
+          </Button>
+        </PremiumDialog>
       </div>
     </section>
   )

@@ -6,9 +6,9 @@ import { SidebarProvider } from "@/components/ui/sidebar"
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
-    <div className="flex min-h-screen w-full h-full flex-col">
+    <div className="flex min-h-screen flex-col">
       <SidebarProvider>
-        <div className="max-w-dvw mx-auto p-4 sm:pl-12 sm:pr-2 sm:py-6 flex w-full grow gap-5">
+        <div className="max-w-dvw  mx-auto p-4 sm:pl-12 sm:pr-2 sm:py-6 flex w-full gap-5">
           <AppSidebar />
           <main className="w-full h-full space-y-4">
             <Navbar />

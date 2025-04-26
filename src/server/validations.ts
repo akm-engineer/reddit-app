@@ -31,3 +31,17 @@ export const postByIdSchema = z
   })
 
 export type PostByIdValues = z.infer<typeof postByIdSchema>
+
+export const generateVideoSchema = z.object({
+  video_url: requiredString,
+  voice_id: requiredString,
+  text: requiredString,
+})
+
+export type GenerateVideoValues = z.infer<typeof generateVideoSchema>
+
+export const generateFreeVideoSchema = z.object({
+  text: requiredString,
+})
+
+export type GenerateFreeVideoValues = z.infer<typeof generateFreeVideoSchema>

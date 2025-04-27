@@ -2,10 +2,11 @@ import { kyInstance } from "@/lib/ky"
 import {
   generateFreeVideoSchema,
   generateVideoSchema,
-  postByIdSchema,
+  redditCommentsSchema,
+  redditPostUrlRegex,
   type GenerateFreeVideoValues,
   type GenerateVideoValues,
-  type PostByIdValues,
+  type RedditCommentsValues,
 } from "../validations"
 import { BASEURL } from ".."
 
@@ -15,15 +16,22 @@ type Comment = {
   comment: string
 }
 
-export const getRedditPostById = async ({
+export const fetchRedditComments = async ({
   input,
 }: {
-  input: PostByIdValues
+  input: RedditCommentsValues
 }): Promise<
   { error?: string } | { data?: { title: string; top_comments: Comment[] } }
 > => {
   try {
-    const { postId } = postByIdSchema.parse(input)
+    const { url } = redditCommentsSchema.parse(input)
+
+    const match = redditPostUrlRegex.exec(url)
+    const postId = match?.[1] ?? ""
+
+    if (!postId) {
+      throw new Error("Invalid Reddit post ID extracted.")
+    }
 
     const res = await kyInstance
       .get(`http://localhost:8080/reddit/comments?post_id=${postId}`)

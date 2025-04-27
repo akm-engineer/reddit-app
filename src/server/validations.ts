@@ -9,28 +9,33 @@ export const loginSchema = z.object({
 
 export type LoginValues = z.infer<typeof loginSchema>
 
-const redditPostIdRegex = /comments\/([a-z0-9]+)/i
+export const redditPostUrlRegex = /comments\/([a-z0-9]+)/i
 
-export const postByIdSchema = z
-  .object({
-    url: requiredString.refine(
-      (url) => {
-        const match = redditPostIdRegex.exec(url)
-        return !!match
-      },
-      {
-        message: "Invalid Reddit URL!",
-      }
-    ),
-  })
-  .transform((data) => {
-    const match = redditPostIdRegex.exec(data.url)
-    return {
-      postId: match?.[1] ?? "",
-    }
-  })
+// export const redditCommentsSchema = z
+//   .object({
+//     url: requiredString.refine(
+//       (url) => {
+//         const match = redditPostUrlRegex.exec(url)
+//         return !!match
+//       },
+//       {
+//         message: "Invalid Reddit URL!",
+//       }
+//     ),
+//   })
+//   .transform((data) => {
+//     const match = redditPostUrlRegex.exec(data.url)
+//     return {
+//       postId: match?.[1] ?? "",
+//     }
+//   })
+export const redditCommentsSchema = z.object({
+  url: requiredString.refine((url) => redditPostUrlRegex.test(url), {
+    message: "Invalid Reddit URL!",
+  }),
+})
 
-export type PostByIdValues = z.infer<typeof postByIdSchema>
+export type RedditCommentsValues = z.infer<typeof redditCommentsSchema>
 
 export const generateVideoSchema = z.object({
   video_url: requiredString,

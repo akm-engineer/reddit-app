@@ -1,5 +1,5 @@
 "use client"
-import { Button } from "@/components/ui/button"
+import { Button, LoadingButton } from "@/components/ui/button"
 import {
   PromptInput,
   PromptInputAction,
@@ -8,10 +8,17 @@ import {
 } from "@/components/ui/prompt-input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
-import { generateFreeVideo } from "@/server/actions/postActions"
+import { kyInstance } from "@/lib/ky"
+import {
+  generateFreeVideo,
+  fetchRedditComments,
+} from "@/server/actions/postActions"
 import {
   generateFreeVideoSchema,
+  redditCommentsSchema,
+  redditPostUrlRegex,
   type GenerateFreeVideoValues,
+  type RedditCommentsValues,
 } from "@/server/validations"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
@@ -23,17 +30,12 @@ import {
 } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { ArrowUp, Paperclip, Square, X } from "lucide-react"
-import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useRef, useState, useTransition } from "react"
 import { useForm } from "react-hook-form"
 
 export default function Home() {
-  // const {
-  //   value,
-  //   characterCount,
-  //   handleChange,
-  //   maxLength: limit,
-  // } = useCharacterLimit({ maxLength })
+  const router = useRouter()
 
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -70,23 +72,49 @@ export default function Home() {
   const [error, setError] = useState<string>()
 
   const form = useForm({
-    resolver: zodResolver(generateFreeVideoSchema),
+    resolver: zodResolver(redditCommentsSchema),
     defaultValues: {
-      text: "",
+      url: "",
     },
   })
 
-  const onSubmit = async (input: GenerateFreeVideoValues) => {
+  const onSubmit = async (input: RedditCommentsValues) => {
+    // console.log("wer")
     setError(undefined)
+
     startTransition(async () => {
-      const res = await generateFreeVideo({ input })
-      if (res?.error) {
-        setError(res?.error)
+      try {
+        const commentsRes = await fetchRedditComments({ input })
+
+        if ("error" in commentsRes) {
+          setError(commentsRes.error)
+          return
+        }
+
+        const summary = await kyInstance
+          .post("/api/summary", { json: { prompt: commentsRes } })
+          .json<{ summary: string }>()
+        console.log(summary)
+
+        const res = await generateFreeVideo({
+          input: { text: summary.summary },
+        })
+
+        if (res.data) {
+          router.push("/edit")
+        }
+
+        if (res?.error) {
+          setError(res?.error)
+        }
+      } catch (error) {
+        console.error(error)
+        setError("Something went wrong during submission.")
       }
     })
   }
 
-  const characterCount = form.watch("text")?.length || 0
+  const characterCount = form.watch("url")?.length || 0
   const maxLength = 300
 
   return (
@@ -151,10 +179,8 @@ export default function Home() {
                   <Textarea
                     className="bg-transparent focus-visible:ring-0 border-none w-full h-full resize-none outline-none"
                     placeholder="Enter your Reddit URL here"
-                    // value={value}
-                    {...form.register("text")}
+                    {...form.register("url")}
                     maxLength={maxLength}
-                    // onChange={handleChange}
                     aria-describedby={`input-description`}
                   />
                   <div className="w-full h-fit flex items-end justify-between p-2">
@@ -166,26 +192,31 @@ export default function Home() {
                     >
                       {characterCount}/{maxLength}
                     </div>
-                    <Button
-                      // loading={isPending}
+                    <LoadingButton
+                      loading={isPending}
                       className="flex gap-2 items-center bg-transparent text-[#808080] hover:bg-transparent ring-1 ring-sidebar-ring"
-                      type="button"
-                      asChild
+                      type="submit"
+                      // asChild
                     >
-                      <Link href="/edit">
-                        <HugeiconsIcon
-                          icon={SparklesIcon}
-                          size={20}
-                          stroke="#1E81F3"
-                          fill="#1E81F3"
-                          className="border-[#1E81F3]"
-                        />
-                        Generate Now
-                      </Link>
-                    </Button>
+                      {/* <Link href="/edit"> */}
+                      <HugeiconsIcon
+                        icon={SparklesIcon}
+                        size={20}
+                        stroke="#1E81F3"
+                        fill="#1E81F3"
+                        className="border-[#1E81F3]"
+                      />
+                      Generate Now
+                      {/* </Link> */}
+                    </LoadingButton>
                   </div>
                   {error && (
                     <p className="text-red-400/70 text-sm p-2">{error}</p>
+                  )}
+                  {form?.formState?.errors?.url && (
+                    <p className="text-red-400/70 text-sm p-2">
+                      {form?.formState?.errors?.url?.message}
+                    </p>
                   )}
                 </form>
               </div>
